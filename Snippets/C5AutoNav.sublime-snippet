@@ -1,0 +1,14 @@
+<snippet>
+	<content><![CDATA[
+<?php
+  \$autonav = BlockType::getByHandle('autonav');
+  \$autonav->controller->orderBy = 'display_asc';
+  \$autonav->controller->displayPages = 'top';
+  \$autonav->controller->displaySubPages = 'none';
+  \$autonav->controller->displaySubPageLevels =  'enough';
+  \$autonav->controller->displaySubPageLevelsNum = 0;
+  \$autonav->render('templates/header_menu');
+?>
+]]></content>
+	<tabTrigger>c5nav</tabTrigger>
+</snippet>

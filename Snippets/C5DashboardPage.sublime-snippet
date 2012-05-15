@@ -1,0 +1,47 @@
+<snippet>
+  <content><![CDATA[
+defined('C5_EXECUTE') or die("Access Denied.");
+
+\$ih = Loader::helper('concrete/interface');
+\$cap = Loader::helper('concrete/dashboard');
+\$valt = Loader::helper('validation/token');
+\$valc = Loader::helper('concrete/validation');
+\$form = Loader::helper('form');
+
+print \$cap->getDashboardPaneHeaderWrapper(t('${1:Heading}'));?>
+<div class="ccm-pane-body">
+  <div class="clearfix">
+    <? print \$ih->button(t('Add a Biddable Item'), \$this->url('dashboard', 'bidding', 'items', 'add'), 'right'); ?>
+    <br/><br/>
+  </div>
+  <?php
+  if(is_array(\$items) && count(\$items)) { ?>
+    <table border="0" cellspacing="0" cellpadding="0" class="zebra-striped">
+      <thead>
+        <tr>
+          <th class="header">Name</th>
+          <th class="header">Current Bid</th>
+          <th class="header">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+    <?php foreach(\$items as \$i) { ?>
+        <tr>
+          <td><?php print \$i->title; ?></td>
+          <td><?php print money_format("\$%i", \$i->getCurrentBid()); ?></td>
+          <td><?php print \$ih->button(t('Edit'), \$this->url('dashboard', 'bidding', 'items', 'details', \$i->id), 'right'); ?></td>
+        </tr>
+    <?php } ?>
+      </tbody>
+    </table>
+  <?php } else { ?>
+    <h2>None found yet</h2>
+    <p><a href="<?php print \$this->url('dashboard', 'bidding', 'items', 'add'); ?>">add the first one!</a></p>
+  <?php } ?>
+</div>
+<?php print \$cap->getDashboardPaneFooterWrapper()?>
+]]></content>
+  <tabTrigger>c5dp</tabTrigger>
+  <scope>source.php</scope>
+  <description>C5 Dashboard Page</description>
+</snippet>

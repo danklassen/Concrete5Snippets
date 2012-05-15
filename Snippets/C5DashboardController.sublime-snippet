@@ -1,0 +1,16 @@
+<snippet>
+  <content><![CDATA[
+defined('C5_EXECUTE') or die("Access Denied.");
+
+Loader::controller('/dashboard/base');
+class Dashboard${1:Name}Controller extends DashboardBaseController {
+
+  public function view() {
+  }
+
+}
+]]></content>
+  <tabTrigger>c5dc</tabTrigger>
+  <scope>source.php</scope>
+  <description>C5 Dashboard Controller</description>
+</snippet>

@@ -1,0 +1,80 @@
+<snippet>
+  <content><![CDATA[
+defined('C5_EXECUTE') or die(_("Access Denied."));
+
+class ${1:ClassName} extends ADOdb_Active_Record {
+public \$_table = '${2:TableName}';
+
+  public function __construct() {
+    parent::__construct();
+  }
+
+  /**
+   * save this instance to the database. If it is a new object, an insert is performed
+   * otherwise an update is performed.
+   * @param array an associative array of attribute to set for this object
+   */
+  public function save(\$data = array()) {
+    if( !\$this->id ) {
+      \$this->created_at = date("Y-m-d G:i:s");
+    }
+    \$this->updated_at = date("Y-m-d G:i:s");
+    \$this->set_data(\$data);
+    return parent::save(\$data);
+  }
+
+  /**
+   * a static method to insert an instance into the database
+   * @param array an associative array of data to set
+   */
+  public static function add(\$data) {
+    \$item = new ${1:ClassName}();
+    return \$item->save(\$data);
+  }
+
+  /**
+   * set passed in attributes for this instance
+   * @param array an associative array of data
+   */
+  public function set_data(\$data = array()) {
+    foreach(\$data as \$key => \$value) {
+      \$this->\$key = \$value;
+    }
+  }
+
+  /**
+   * load up a ${1:ClassName} by it's id
+   * @param integer \$id id of the ${1:ClassName} item to load
+   * @return ${1:ClassName}
+   */
+  public static function _find(\$id) {
+    if(!\$id || (intval(\$id) == 0)) {
+      return false;
+    }
+    \$obj = new ${1:ClassName}();
+    \$obj->load('id=?', array(\$id));
+    return \$obj;
+  }
+
+
+  /**
+   * get all the ${1:ClassName} objects in the database
+   * @return ADODBRecordSet an array of ${1:ClassName} items
+   */
+  public static function getAll() {
+    \$db = Loader::db();
+    \$rs = \$db->Execute('select id from ${2:TableName} order by created_at DESC');
+    \$items = array();
+
+    foreach (\$rs as \$row) {
+      \$items[] = ${1:ClassName}::_find(\$row['id']);
+    }
+    return \$items;
+  }
+
+}
+]]></content>
+  <tabTrigger>c5model</tabTrigger>
+  <scope>source.php</scope>
+  <description>C5 Model</description>
+</snippet>

@@ -1,0 +1,6 @@
+<snippet>
+	<content><![CDATA[
+<? defined('C5_EXECUTE') or die("Access Denied."); ?>
+]]></content>
+	<tabTrigger>c5denied</tabTrigger>
+</snippet>

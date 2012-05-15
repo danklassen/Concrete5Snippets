@@ -1,0 +1,56 @@
+<snippet>
+  <content><![CDATA[
+<?php
+defined('C5_EXECUTE') or die('Access Denied.');
+
+/**
+ * @author Dan Klassen <dan@tripleiweb.ca>
+ * version history
+ * 0.1 initial release.
+ */
+
+class ${1:name}Package extends Package {
+
+  protected \$pkgHandle = '${2:handle}';
+  protected \$appVersionRequired = '5.4.2.2';
+  protected \$pkgVersion = '0.1';
+
+  public function getPackageDescription() {
+    return t('${3}');
+  }
+
+  public function getPackageName() {
+    return t('${4}');
+  }
+
+  public function getPackageHandle() {
+    return \$this->pkgHandle;
+  }
+
+  public function upgrade(){
+    parent::upgrade();
+    \$this->setup();
+  }
+
+  public function install() {
+    parent::install();
+    \$this->setup();
+  }
+
+  public function setup() {
+    \$pkg = Package::getByHandle('${2:handle}');
+  }
+
+  public function uninstall() {
+    parent::uninstall();
+    \$db = Loader::db();
+  }
+
+}
+
+]]></content>
+  <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+  <!-- <tabTrigger>hello</tabTrigger> -->
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <!-- <scope>source.python</scope> -->
+</snippet>
