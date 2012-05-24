@@ -1,0 +1,9 @@
+{
+        "scope": "source.php - variable.other.php",
+
+        "completions":
+        [
+                { "trigger": "c5defined", "contents": "defined('C5_EXECUTE') or die(_('Access Denied.'));" },
+                
+        ]
+}
