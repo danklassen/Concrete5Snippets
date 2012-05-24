@@ -1,0 +1,12 @@
+<snippet>
+	<content><![CDATA[
+<div class="clearfix">
+	<?php print \$form->label('${1:name}', t('${2:Label Text}')); ?>
+	<div class="input"><?php print \$form->text('${1:name}', \$${1:name}); ?></div>
+</div>
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>c5text</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

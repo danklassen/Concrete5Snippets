@@ -4,7 +4,6 @@
 defined('C5_EXECUTE') or die('Access Denied.');
 
 /**
- * @author Dan Klassen <dan@tripleiweb.ca>
  * version history
  * 0.1 initial release.
  */
@@ -12,7 +11,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
 class ${1:name}Package extends Package {
 
   protected \$pkgHandle = '${2:handle}';
-  protected \$appVersionRequired = '5.4.2.2';
+  protected \$appVersionRequired = '5.5.2';
   protected \$pkgVersion = '0.1';
 
   public function getPackageDescription() {
@@ -50,7 +49,7 @@ class ${1:name}Package extends Package {
 
 ]]></content>
   <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
-  <!-- <tabTrigger>hello</tabTrigger> -->
+  <tabTrigger>c5package</tabTrigger>
   <!-- Optional: Set a scope to limit where the snippet will trigger -->
   <!-- <scope>source.python</scope> -->
 </snippet>
