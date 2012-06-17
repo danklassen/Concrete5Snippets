@@ -1,42 +1,36 @@
 <snippet>
   <content><![CDATA[
-defined('C5_EXECUTE') or die(_("Access Denied."));
+<?php defined('C5_EXECUTE') or die(_("Access Denied."));
 
 class ${1:ClassName} extends ADOdb_Active_Record {
-public \$_table = '${2:TableName}';
+  public \$_table = '${2:tableName}';
 
+  /**
+   * default constructor
+   */
   public function __construct() {
     parent::__construct();
   }
 
   /**
-   * save this instance to the database. If it is a new object, an insert is performed
-   * otherwise an update is performed.
-   * @param array an associative array of attribute to set for this object
+   * save the current instance to the database
    */
-  public function save(\$data = array()) {
+  public function save() {
+    \$is_new = false;
     if( !\$this->id ) {
       \$this->created_at = date("Y-m-d G:i:s");
+      \$is_new = true;
     }
     \$this->updated_at = date("Y-m-d G:i:s");
-    \$this->set_data(\$data);
-    return parent::save(\$data);
+    \$value = parent::save();
+    return \$value;
   }
 
   /**
-   * a static method to insert an instance into the database
-   * @param array an associative array of data to set
+   * set data for the current instance
+   * @param array \$data an associative array of attr => value to set
    */
-  public static function add(\$data) {
-    \$item = new ${1:ClassName}();
-    return \$item->save(\$data);
-  }
-
-  /**
-   * set passed in attributes for this instance
-   * @param array an associative array of data
-   */
-  public function set_data(\$data = array()) {
+  public function setData(\$data = array()) {
     foreach(\$data as \$key => \$value) {
       \$this->\$key = \$value;
     }
@@ -51,19 +45,18 @@ public \$_table = '${2:TableName}';
     if(!\$id || (intval(\$id) == 0)) {
       return false;
     }
-    \$obj = new ${1:ClassName}();
-    \$obj->load('id=?', array(\$id));
-    return \$obj;
+    \$item = new ${1:ClassName}();
+    \$item->load('id=?', array(\$id));
+    return \$item;
   }
-
 
   /**
    * get all the ${1:ClassName} objects in the database
-   * @return ADODBRecordSet an array of ${1:ClassName} items
+   * @return array an array of ${1:ClassName} items
    */
   public static function getAll() {
     \$db = Loader::db();
-    \$rs = \$db->Execute('select id from ${2:TableName} order by created_at DESC');
+    \$rs = \$db->Execute('select id from ${2:tableName} order by created_at DESC');
     \$items = array();
 
     foreach (\$rs as \$row) {
@@ -72,9 +65,33 @@ public \$_table = '${2:TableName}';
     return \$items;
   }
 
+  /**
+   * determine if this ${1:ClassName} is valid
+   * @return boolean
+   */
+  public function isValid() {
+    return true;
+  }
+
+  /**
+   * add an error to the stack
+   * @param string \$message message to display
+   * @param string \$column the attribute this error is in reference to
+   */
+  public function addError(\$message, \$column = null) {
+    if(!isset(\$this->_errors) || !is_array(\$this->_errors)) {
+      \$this->_errors = array();
+    }
+    if(!is_null(\$column)) {
+      \$this->_errors[\$column] = \$message;
+    } else {
+      \$this->_errors[] = \$message;
+    }
+  }
+
 }
 ]]></content>
   <tabTrigger>c5model</tabTrigger>
-  <scope>source.php</scope>
+  <!-- <scope>source.php</scope> -->
   <description>C5 Model</description>
 </snippet>
